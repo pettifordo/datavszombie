@@ -45,9 +45,9 @@ export function GardenView({ steward }: GardenViewProps) {
   const healthStatus = getHealthStatus(steward.overallHealth);
 
   return (
-    <div className="min-h-screen bg-navy-900 text-slate-100">
+    <div className="min-h-screen bg-navy-900 text-slate-100 flex flex-col">
       {/* Header */}
-      <div className="border-b border-slate-700/50 sticky top-0 z-50 bg-navy-900/95 backdrop-blur-sm">
+      <div className="border-b border-slate-700/50 sticky top-0 z-50 bg-navy-900/95 backdrop-blur-sm flex-shrink-0">
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex items-start justify-between">
             <div>
@@ -64,100 +64,103 @@ export function GardenView({ steward }: GardenViewProps) {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Overall Health Summary */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-slate-800/50 border border-slate-700/50 rounded-lg p-6 mb-8"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-slate-100">Garden Overview</h2>
-            <div className="text-2xl">{steward.assets.filter(a => a.anomalyCount === 0).length}/{steward.assets.length} assets healthy</div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-slate-700/30 rounded p-4">
-              <p className="text-sm text-slate-400 mb-2">Total Assets</p>
-              <p className="text-2xl font-bold text-slate-100">{steward.assets.length}</p>
-            </div>
-            <div className="bg-slate-700/30 rounded p-4">
-              <p className="text-sm text-slate-400 mb-2">Active Issues</p>
-              <p className="text-2xl font-bold text-red-400">
-                {steward.assets.reduce((sum, a) => sum + a.anomalyCount, 0)}
-              </p>
-            </div>
-            <div className="bg-slate-700/30 rounded p-4">
-              <p className="text-sm text-slate-400 mb-2">Avg Health</p>
-              <p className="text-2xl font-bold text-emerald-400">
-                {Math.round(steward.assets.reduce((sum, a) => sum + a.healthScore, 0) / steward.assets.length)}%
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Assets Grid */}
-        <div>
-          <h3 className="text-lg font-semibold text-slate-100 mb-4">Data Assets</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {steward.assets.map((asset, idx) => (
-              <motion.div
-                key={asset.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.05 }}
-              >
-                <Plant
-                  asset={asset}
-                  onClick={() => setSelectedAsset(asset)}
-                  onIssuesClick={() => handleIssuesClick(asset)}
-                />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Details Panel */}
-        {selectedAsset && !showIssuesPanel && (
+      {/* Scrollable content */}
+      <div className="flex-1 overflow-y-auto">
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          {/* Overall Health Summary */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="mt-8 bg-slate-800/50 border border-slate-700/50 rounded-lg p-6"
+            className="bg-slate-800/50 border border-slate-700/50 rounded-lg p-6 mb-8"
           >
-            <h3 className="text-xl font-semibold text-slate-100 mb-6">{selectedAsset.name}</h3>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-slate-100">Garden Overview</h2>
+              <div className="text-2xl">{steward.assets.filter(a => a.anomalyCount === 0).length}/{steward.assets.length} assets healthy</div>
+            </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-slate-700/30 rounded p-4">
-                <p className="text-xs text-slate-400 mb-2">Health Score</p>
-                <p className="text-2xl font-bold text-emerald-400">{selectedAsset.healthScore}%</p>
+                <p className="text-sm text-slate-400 mb-2">Total Assets</p>
+                <p className="text-2xl font-bold text-slate-100">{steward.assets.length}</p>
               </div>
-
               <div className="bg-slate-700/30 rounded p-4">
-                <p className="text-xs text-slate-400 mb-2">Freshness</p>
-                <p className="text-2xl font-bold text-blue-400">{selectedAsset.freshness}%</p>
+                <p className="text-sm text-slate-400 mb-2">Active Issues</p>
+                <p className="text-2xl font-bold text-red-400">
+                  {steward.assets.reduce((sum, a) => sum + a.anomalyCount, 0)}
+                </p>
               </div>
-
               <div className="bg-slate-700/30 rounded p-4">
-                <p className="text-xs text-slate-400 mb-2">Lineage Quality</p>
-                <p className="text-2xl font-bold text-purple-400">{selectedAsset.lineageQuality}%</p>
-              </div>
-
-              <div className={`bg-slate-700/30 rounded p-4 ${selectedAsset.anomalyCount > 0 ? 'border border-red-600/30' : ''}`}>
-                <p className="text-xs text-slate-400 mb-2">Issues</p>
-                <p className={`text-2xl font-bold ${selectedAsset.anomalyCount > 0 ? 'text-red-400' : 'text-slate-400'}`}>
-                  {selectedAsset.anomalyCount}
+                <p className="text-sm text-slate-400 mb-2">Avg Health</p>
+                <p className="text-2xl font-bold text-emerald-400">
+                  {Math.round(steward.assets.reduce((sum, a) => sum + a.healthScore, 0) / steward.assets.length)}%
                 </p>
               </div>
             </div>
-
-            <div className="pt-4 border-t border-slate-600/30">
-              <p className="text-sm text-slate-400">
-                <strong>Type:</strong> {selectedAsset.type} | <strong>Last Updated:</strong> {selectedAsset.lastUpdated}
-              </p>
-            </div>
           </motion.div>
-        )}
+
+          {/* Assets Grid */}
+          <div>
+            <h3 className="text-lg font-semibold text-slate-100 mb-4">Data Assets</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-12">
+              {steward.assets.map((asset, idx) => (
+                <motion.div
+                  key={asset.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                >
+                  <Plant
+                    asset={asset}
+                    onClick={() => setSelectedAsset(asset)}
+                    onIssuesClick={() => handleIssuesClick(asset)}
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Details Panel */}
+          {selectedAsset && !showIssuesPanel && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-slate-800/50 border border-slate-700/50 rounded-lg p-6 mb-12"
+            >
+              <h3 className="text-xl font-semibold text-slate-100 mb-6">{selectedAsset.name}</h3>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div className="bg-slate-700/30 rounded p-4">
+                  <p className="text-xs text-slate-400 mb-2">Health Score</p>
+                  <p className="text-2xl font-bold text-emerald-400">{selectedAsset.healthScore}%</p>
+                </div>
+
+                <div className="bg-slate-700/30 rounded p-4">
+                  <p className="text-xs text-slate-400 mb-2">Freshness</p>
+                  <p className="text-2xl font-bold text-blue-400">{selectedAsset.freshness}%</p>
+                </div>
+
+                <div className="bg-slate-700/30 rounded p-4">
+                  <p className="text-xs text-slate-400 mb-2">Lineage Quality</p>
+                  <p className="text-2xl font-bold text-purple-400">{selectedAsset.lineageQuality}%</p>
+                </div>
+
+                <div className={`bg-slate-700/30 rounded p-4 ${selectedAsset.anomalyCount > 0 ? 'border border-red-600/30' : ''}`}>
+                  <p className="text-xs text-slate-400 mb-2">Issues</p>
+                  <p className={`text-2xl font-bold ${selectedAsset.anomalyCount > 0 ? 'text-red-400' : 'text-slate-400'}`}>
+                    {selectedAsset.anomalyCount}
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-slate-600/30">
+                <p className="text-sm text-slate-400">
+                  <strong>Type:</strong> {selectedAsset.type} | <strong>Last Updated:</strong> {selectedAsset.lastUpdated}
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </div>
       </div>
 
       {/* Issues Detail Panel */}
