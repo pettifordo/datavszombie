@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌻 Data vs. Zombies
 
-## Getting Started
+A gamified data stewardship UI inspired by Plants vs. Zombies. Help data stewards cultivate healthy, thriving data gardens while defending against the zombie apocalypse of poor data quality!
 
-First, run the development server:
+## 🎮 Features
+
+- **Your Garden** — Individual steward view showing their data assets as plants
+  - Plant health reflects data quality metrics (freshness, lineage, anomalies)
+  - Visual indicators for zombie attacks (quality issues)
+  - Animated plant growth stages from seed to full bloom
+  
+- **Flower Show** — Leaderboard ranking all stewards' gardens
+  - Compare gardens ranked best to worst
+  - See which stewards are winning the data quality battle
+  - Medals and visual rankings
+  
+- **Real-time Metrics**
+  - Health Score: Overall data quality
+  - Freshness: How current is the data
+  - Lineage Quality: Data traceability
+  - Anomalies: Quality issues detected
+
+## 🚀 Getting Started
+
+### Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) to see the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+## 🏗️ Architecture
 
-To learn more about Next.js, take a look at the following resources:
+- **Next.js 14** with App Router
+- **TypeScript** for type safety
+- **Tailwind CSS** for styling
+- **Framer Motion** for smooth animations
+- Mock data in `/src/lib/mockData.ts` (replace with real API integration)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/
+│   ├── page.tsx           # Main navigation & view switcher
+│   ├── layout.tsx         # Root layout
+│   └── globals.css        # Global styles
+├── components/
+│   ├── Plant.tsx          # Individual plant/asset card
+│   ├── GardenView.tsx     # Single steward's garden
+│   └── FlowerShow.tsx     # Leaderboard view
+└── lib/
+    ├── types.ts           # TypeScript types
+    └── mockData.ts        # Demo data (5 stewards, 3 assets each)
+```
 
-## Deploy on Vercel
+## 🎨 Plant Health Stages
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- 🌻 **Flourishing** (85-100%) - Excellent data quality
+- 🌺 **Blooming** (70-84%) - Good data health
+- 🌾 **Growing** (55-69%) - Acceptable but needs attention
+- 🌿 **Sprouting** (40-54%) - Weak, urgent care needed
+- 🍃 **Wilting** (20-39%) - Critical condition
+- 💀 **Dead** (0-19%) - Failed data asset
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔧 Customization
+
+### Adding Real Data
+
+Replace the mock data in `src/lib/mockData.ts` with API calls to your data platform:
+
+```typescript
+// Example: fetch from your API
+const stewards = await fetch('/api/stewards').then(r => r.json());
+```
+
+### Styling
+
+All components use Tailwind CSS. Customize colors and animations in the component files.
+
+## 📦 Dependencies
+
+- `next` - React framework
+- `framer-motion` - Animations
+- `lucide-react` - Icons
+- `typescript` - Type safety
+- `tailwindcss` - Styling
+
+## 🚀 Deploy on Vercel
+
+The easiest way to deploy:
+
+1. Push to GitHub (already done: `https://github.com/pettifordo/datavszombie.git`)
+2. Go to [Vercel](https://vercel.com)
+3. Click "New Project"
+4. Import the GitHub repository
+5. Click "Deploy"
+
+That's it! Your app will be live at a Vercel URL.
+
+For detailed instructions, see [Next.js Deployment Docs](https://nextjs.org/docs/app/building-your-application/deploying)
