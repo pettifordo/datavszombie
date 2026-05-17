@@ -12,10 +12,10 @@ export function ZombieVisual({ count, size = 40 }: ZombieVisualProps) {
 
   const positions = [
     { x: 0, y: 0 },
-    { x: 30, y: 10 },
-    { x: 15, y: 30 },
-    { x: -20, y: 15 },
-    { x: 25, y: -15 },
+    { x: 35, y: 8 },
+    { x: 18, y: 35 },
+    { x: -28, y: 12 },
+    { x: 30, y: -18 },
   ];
 
   return (
@@ -29,92 +29,107 @@ export function ZombieVisual({ count, size = 40 }: ZombieVisualProps) {
             top: `${positions[idx % positions.length].y}px`,
           }}
           animate={{
-            y: [0, -3, 0],
-            x: [0, 2, 0],
+            y: [0, -4, 0],
+            x: [0, 3, 0],
+            rotate: [0, 2, 0],
           }}
           transition={{
-            duration: 2 + idx * 0.3,
+            duration: 2.5 + idx * 0.3,
             repeat: Infinity,
-            delay: idx * 0.2,
+            delay: idx * 0.25,
           }}
         >
           <svg
             width={size}
             height={size}
-            viewBox="0 0 40 50"
+            viewBox="0 0 48 56"
             xmlns="http://www.w3.org/2000/svg"
-            className="drop-shadow-lg"
+            className="drop-shadow-xl filter hue-rotate-[80deg] saturate-50"
           >
             {/* Head */}
-            <circle cx="20" cy="12" r="10" fill="#7A9B5B" stroke="#5A7B3B" strokeWidth="1" />
+            <ellipse cx="24" cy="14" rx="12" ry="13" fill="#6B8B5B" stroke="#4A5B3B" strokeWidth="1.5" />
 
-            {/* Eyes - dead/hollow */}
-            <circle cx="16" cy="10" r="2" fill="#1a1a1a" />
-            <circle cx="24" cy="10" r="2" fill="#1a1a1a" />
-            <line x1="15" y1="12" x2="25" y2="12" stroke="#1a1a1a" strokeWidth="0.5" />
+            {/* Rotting skin texture - patches */}
+            <circle cx="18" cy="10" r="2.5" fill="#5A7B3B" opacity="0.6" />
+            <circle cx="28" cy="12" r="2" fill="#5A7B3B" opacity="0.6" />
+            <circle cx="22" cy="18" r="1.5" fill="#5A7B3B" opacity="0.6" />
 
-            {/* Mouth - menacing grin */}
-            <path
-              d="M 17 14 Q 20 16 23 14"
-              fill="none"
-              stroke="#3A4B1B"
-              strokeWidth="1"
-              strokeLinecap="round"
-            />
+            {/* Left eye - hollow/dead */}
+            <circle cx="18" cy="12" r="3" fill="#1a1a1a" />
+            <circle cx="18" cy="12" r="1.5" fill="#FF4444" opacity="0.7" />
 
-            {/* Body */}
-            <rect x="14" y="22" width="12" height="14" fill="#6B8B4B" stroke="#5A7B3B" strokeWidth="1" />
+            {/* Right eye - missing/sunken */}
+            <circle cx="30" cy="12" r="3" fill="#1a1a1a" />
+            <path d="M 28 13 L 32 11" stroke="#FF4444" strokeWidth="1" opacity="0.7" />
 
-            {/* Tattered clothing lines */}
-            <line x1="15" y1="25" x2="14" y2="28" stroke="#5A7B3B" strokeWidth="0.5" opacity="0.6" />
-            <line x1="20" y1="25" x2="21" y2="29" stroke="#5A7B3B" strokeWidth="0.5" opacity="0.6" />
-            <line x1="25" y1="25" x2="26" y2="28" stroke="#5A7B3B" strokeWidth="0.5" opacity="0.6" />
+            {/* Nose - rotting */}
+            <path d="M 24 15 L 22 17 M 24 15 L 26 17" stroke="#4A5B3B" strokeWidth="1.5" />
 
-            {/* Left arm */}
-            <line x1="14" y1="25" x2="6" y2="28" stroke="#6B8B4B" strokeWidth="2" strokeLinecap="round" />
-            {/* Left hand */}
-            <circle cx="5" cy="28" r="2" fill="#7A9B5B" />
+            {/* Mouth - menacing grin with teeth */}
+            <path d="M 19 19 Q 24 22 29 19" fill="none" stroke="#1a1a1a" strokeWidth="1.5" strokeLinecap="round" />
+            {/* Teeth marks */}
+            <line x1="20" y1="18.5" x2="20" y2="20" stroke="#FFF" strokeWidth="0.5" opacity="0.7" />
+            <line x1="23" y1="18" x2="23" y2="20.5" stroke="#FFF" strokeWidth="0.5" opacity="0.7" />
+            <line x1="26" y1="18" x2="26" y2="20.5" stroke="#FFF" strokeWidth="0.5" opacity="0.7" />
+            <line x1="29" y1="18.5" x2="29" y2="20" stroke="#FFF" strokeWidth="0.5" opacity="0.7" />
 
-            {/* Right arm */}
-            <line x1="26" y1="25" x2="34" y2="28" stroke="#6B8B4B" strokeWidth="2" strokeLinecap="round" />
-            {/* Right hand */}
-            <circle cx="35" cy="28" r="2" fill="#7A9B5B" />
+            {/* Jaw drop - undead look */}
+            <path d="M 19 20 L 18 23" stroke="#4A5B3B" strokeWidth="1" />
+            <path d="M 29 20 L 30 23" stroke="#4A5B3B" strokeWidth="1" />
 
-            {/* Left leg */}
-            <line x1="16" y1="36" x2="14" y2="48" stroke="#5A6B3B" strokeWidth="2" strokeLinecap="round" />
+            {/* Neck - torn/damaged */}
+            <line x1="19" y1="26" x2="17" y2="30" stroke="#5A7B3B" strokeWidth="1.5" opacity="0.8" />
+            <line x1="29" y1="26" x2="31" y2="30" stroke="#5A7B3B" strokeWidth="1.5" opacity="0.8" />
+            <path d="M 22 26 L 21 28 M 26 26 L 27 28" stroke="#4A5B3B" strokeWidth="1" opacity="0.6" />
+
+            {/* Body - hunched, decaying */}
+            <ellipse cx="24" cy="37" rx="13" ry="15" fill="#5A7B3B" stroke="#4A5B3B" strokeWidth="1.5" />
+            
+            {/* Rotten patches on body */}
+            <circle cx="18" cy="35" r="2.5" fill="#4A5B3B" opacity="0.7" />
+            <circle cx="30" cy="38" r="2" fill="#4A5B3B" opacity="0.7" />
+            <circle cx="24" cy="42" r="2" fill="#4A5B3B" opacity="0.7" />
+
+            {/* Tattered clothing/decay lines */}
+            <path d="M 15 32 L 13 38" stroke="#4A5B3B" strokeWidth="1" opacity="0.7" />
+            <path d="M 24 30 L 24 36" stroke="#4A5B3B" strokeWidth="1" opacity="0.7" />
+            <path d="M 33 32 L 35 38" stroke="#4A5B3B" strokeWidth="1" opacity="0.7" />
+
+            {/* Left arm - twisted */}
+            <path d="M 14 34 Q 6 35 4 42" stroke="#5A7B3B" strokeWidth="2.5" strokeLinecap="round" />
+            {/* Left hand - clawed */}
+            <ellipse cx="3" cy="43" rx="2.5" ry="3" fill="#6B8B5B" transform="rotate(-25 3 43)" />
+            <path d="M 1 40 L 0 38 M 3 40 L 3 37 M 5 40 L 6 38" stroke="#5A7B3B" strokeWidth="1" strokeLinecap="round" />
+
+            {/* Right arm - reaching */}
+            <path d="M 34 34 Q 42 35 44 42" stroke="#5A7B3B" strokeWidth="2.5" strokeLinecap="round" />
+            {/* Right hand - clawed */}
+            <ellipse cx="45" cy="43" rx="2.5" ry="3" fill="#6B8B5B" transform="rotate(25 45 43)" />
+            <path d="M 43 40 L 44 38 M 45 40 L 45 37 M 47 40 L 48 38" stroke="#5A7B3B" strokeWidth="1" strokeLinecap="round" />
+
+            {/* Left leg - broken/dragging */}
+            <path d="M 18 52 L 16 56" stroke="#4A7B3B" strokeWidth="2.5" strokeLinecap="round" />
             {/* Left foot */}
-            <ellipse cx="14" cy="48" rx="3" ry="2" fill="#4A5B2B" />
+            <ellipse cx="15" cy="56" rx="2.5" ry="1.5" fill="#3A5B2B" />
 
-            {/* Right leg */}
-            <line x1="24" y1="36" x2="26" y2="48" stroke="#5A6B3B" strokeWidth="2" strokeLinecap="round" />
+            {/* Right leg - normal */}
+            <path d="M 30 52 L 32 56" stroke="#4A7B3B" strokeWidth="2.5" strokeLinecap="round" />
             {/* Right foot */}
-            <ellipse cx="26" cy="48" rx="3" ry="2" fill="#4A5B2B" />
+            <ellipse cx="32" cy="56" rx="2.5" ry="1.5" fill="#3A5B2B" />
 
-            {/* Deterioration - cracks/scars */}
-            <path
-              d="M 18 8 L 16 6"
-              stroke="#5A7B3B"
-              strokeWidth="0.5"
-              opacity="0.5"
-              strokeDasharray="1,1"
-            />
-            <path
-              d="M 22 15 L 24 17"
-              stroke="#5A7B3B"
-              strokeWidth="0.5"
-              opacity="0.5"
-              strokeDasharray="1,1"
-            />
+            {/* Gaping wound on chest */}
+            <ellipse cx="24" cy="40" rx="2.5" ry="3.5" fill="#8B4444" opacity="0.8" />
+            <path d="M 21 38 Q 24 41 27 38" stroke="#8B4444" strokeWidth="0.5" opacity="0.6" />
           </svg>
         </motion.div>
       ))}
 
       {count > 5 && (
         <motion.div
-          className="absolute text-xs font-bold text-red-400"
-          style={{ right: -15, top: 0 }}
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 1, repeat: Infinity }}
+          className="absolute text-sm font-black text-red-500 drop-shadow-lg"
+          style={{ right: -20, top: -5 }}
+          animate={{ scale: [1, 1.15, 1] }}
+          transition={{ duration: 1.2, repeat: Infinity }}
         >
           +{count - 5}
         </motion.div>

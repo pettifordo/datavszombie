@@ -50,30 +50,42 @@ export function Plant({ asset, onClick, onIssuesClick }: PlantProps) {
     return 'bg-green-600';
   };
 
+  // Calculate plant size based on health
+  const plantSize = 60 + (asset.healthScore / 100) * 60; // 60-120px
+  
+  // Calculate zoom level based on health for overall card feel
+  const healthScale = 0.85 + (asset.healthScore / 100) * 0.3; // 0.85-1.15
+
   return (
     <motion.div
       onClick={onClick}
       className={`relative p-5 rounded-lg border ${getHealthBorderColor()} ${getHealthColor()} cursor-pointer overflow-hidden transition-all hover:border-opacity-100 border-opacity-50 hover:shadow-lg hover:shadow-slate-500/20`}
       whileHover={{ scale: 1.02 }}
       transition={{ type: 'spring', stiffness: 400 }}
+      style={{ transformOrigin: 'center' }}
     >
       <div className="space-y-4">
-        {/* Plant visualization centered */}
-        <div className="flex justify-center relative h-32">
+        {/* Plant visualization - scales with health */}
+        <motion.div
+          className="flex justify-center relative"
+          style={{ height: `${plantSize * 1.3}px` }}
+          animate={{ scale: healthScale }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
           <div className="flex flex-col items-center justify-center w-full">
-            {/* Plant SVG */}
+            {/* Plant SVG - size changes with health */}
             <div className="mb-2">
-              <PlantVisual healthScore={asset.healthScore} size={100} />
+              <PlantVisual healthScore={asset.healthScore} size={plantSize} />
             </div>
 
-            {/* Zombies attacking - positioned around the plant */}
+            {/* Zombies attacking - positioned around the plant, MORE VISIBLE for sick plants */}
             {asset.anomalyCount > 0 && (
               <div className="absolute inset-0 flex items-center justify-center">
-                <ZombieVisual count={asset.anomalyCount} size={30} />
+                <ZombieVisual count={asset.anomalyCount} size={Math.max(20, 40 - (asset.healthScore / 100) * 15)} />
               </div>
             )}
           </div>
-        </div>
+        </motion.div>
 
         {/* Header with asset name and type */}
         <div className="border-t border-slate-600/30 pt-3">
