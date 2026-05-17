@@ -1,20 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Data vs. Zombies - Protect Your Data Garden",
-  description: "Help data stewards cultivate healthy, thriving gardens while defending against the zombie apocalypse of poor data quality.",
+  title: "Data Stewardship Platform",
+  description: "Monitor and manage data quality, issues, and stewardship across your organization.",
 };
 
 export default function RootLayout({
@@ -23,11 +19,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={inter.variable}>
+      <body className="bg-navy-900 text-slate-100 h-screen overflow-hidden">
+        {children}
+      </body>
     </html>
   );
 }
