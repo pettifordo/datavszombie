@@ -15,11 +15,11 @@ export default function Home() {
   const [selectedSteward, setSelectedSteward] = useState<DataSteward | null>(null);
 
   return (
-    <main className="min-h-screen bg-navy-900 text-slate-100">
+    <main className="min-h-screen bg-navy-900 text-slate-100 flex flex-col">
       {currentView === 'home' && (
-        <div className="min-h-screen flex flex-col">
+        <div className="flex-1 flex flex-col">
           {/* Header */}
-          <div className="border-b border-slate-700/50 bg-navy-900/80 backdrop-blur-sm sticky top-0 z-40">
+          <div className="border-b border-slate-700/50 bg-navy-900/80 backdrop-blur-sm sticky top-0 z-40 flex-shrink-0">
             <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
               <div>
                 <h1 className="text-2xl font-bold text-slate-100">Data Stewardship Platform</h1>
@@ -36,7 +36,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex-1 max-w-7xl mx-auto w-full px-6 py-12">
+          <div className="flex-1 overflow-y-auto max-w-7xl mx-auto w-full px-6 py-12">
             {/* Welcome Section */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
@@ -120,7 +120,7 @@ export default function Home() {
               transition={{ delay: 0.3 }}
             >
               <h3 className="text-2xl font-bold text-slate-100 mb-4">Quick Access</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-12">
                 {mockStewards.map((steward, idx) => {
                   const healthStatus = steward.overallHealth >= 85 ? 'Excellent' : 
                                      steward.overallHealth >= 70 ? 'Good' : 
@@ -178,8 +178,8 @@ export default function Home() {
       )}
 
       {currentView === 'garden' && selectedSteward && (
-        <div>
-          <div className="sticky top-0 z-10 bg-navy-900 border-b border-slate-700/50">
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <div className="sticky top-0 z-10 bg-navy-900 border-b border-slate-700/50 flex-shrink-0">
             <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
               <button
                 onClick={() => setCurrentView('home')}
@@ -203,13 +203,15 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <GardenView steward={selectedSteward} />
+          <div className="flex-1 overflow-hidden">
+            <GardenView steward={selectedSteward} />
+          </div>
         </div>
       )}
 
       {currentView === 'rankings' && (
-        <div>
-          <div className="sticky top-0 z-10 bg-navy-900 border-b border-slate-700/50">
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <div className="sticky top-0 z-10 bg-navy-900 border-b border-slate-700/50 flex-shrink-0">
             <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
               <button
                 onClick={() => setCurrentView('home')}
@@ -225,13 +227,15 @@ export default function Home() {
               </button>
             </div>
           </div>
-          <FlowerShow
-            stewards={mockStewards}
-            onSelectSteward={(steward) => {
-              setSelectedSteward(steward);
-              setCurrentView('garden');
-            }}
-          />
+          <div className="flex-1 overflow-hidden">
+            <FlowerShow
+              stewards={mockStewards}
+              onSelectSteward={(steward) => {
+                setSelectedSteward(steward);
+                setCurrentView('garden');
+              }}
+            />
+          </div>
         </div>
       )}
     </main>
