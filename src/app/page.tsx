@@ -6,7 +6,7 @@ import { GardenView } from '@/components/GardenView';
 import { FlowerShow } from '@/components/FlowerShow';
 import { DataSteward } from '@/lib/types';
 import { mockStewards } from '@/lib/mockData';
-import { TrendingUp, Zap, Shield } from 'lucide-react';
+import { TrendingUp, Zap, Shield, Users } from 'lucide-react';
 
 type ViewType = 'home' | 'garden' | 'rankings';
 
@@ -78,17 +78,17 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-x-hidden">
-      {/* Animated Background Orbs */}
+      {/* Animated Background Orbs - very subtle */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          animate={{ x: [0, 100, 0], y: [0, 50, 0] }}
+          animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
           transition={{ duration: 20, repeat: Infinity }}
-          className="absolute w-96 h-96 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl top-10 -left-48"
+          className="absolute w-96 h-96 bg-gradient-to-r from-blue-500/5 to-cyan-500/5 rounded-full blur-3xl top-20 -left-48"
         />
         <motion.div
-          animate={{ x: [0, -100, 0], y: [0, -50, 0] }}
+          animate={{ x: [0, -50, 0], y: [0, -30, 0] }}
           transition={{ duration: 25, repeat: Infinity }}
-          className="absolute w-96 h-96 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl bottom-10 -right-48"
+          className="absolute w-96 h-96 bg-gradient-to-r from-slate-500/5 to-blue-500/5 rounded-full blur-3xl bottom-20 -right-48"
         />
       </div>
 
@@ -107,7 +107,7 @@ export default function Home() {
               >
                 🌱
               </motion.div>
-              <h1 className="text-4xl font-black bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <h1 className="text-4xl font-black text-slate-100">
                 Data Stewardship Platform
               </h1>
             </div>
@@ -124,14 +124,10 @@ export default function Home() {
           transition={{ delay: 0.1 }}
           className="mb-20"
         >
-          <h2 className="text-6xl font-black mb-6 leading-tight">
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Monitor.</span>
-            <br />
-            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Manage.</span>
-            <br />
-            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Thrive.</span>
+          <h2 className="text-6xl font-black mb-6 leading-tight text-slate-100">
+            Monitor. Manage. Thrive.
           </h2>
-          <p className="text-xl text-slate-400 max-w-3xl leading-relaxed">
+          <p className="text-xl text-slate-300 max-w-3xl leading-relaxed">
             Your data is the lifeblood of innovation. We help stewards cultivate thriving digital gardens by tracking health metrics, identifying threats, and maintaining quality at every level.
           </p>
         </motion.div>
@@ -144,33 +140,29 @@ export default function Home() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20"
         >
           {[
-            { 
-              label: 'Active Stewards', 
-              value: mockStewards.length, 
-              icon: Shield,
-              gradient: 'from-emerald-500 to-emerald-600',
-              accent: 'emerald'
+            {
+              label: 'Active Stewards',
+              value: mockStewards.length,
+              icon: Users,
+              accentColor: 'text-blue-300'
             },
-            { 
-              label: 'Data Assets', 
-              value: mockStewards.reduce((sum, s) => sum + s.assets.length, 0), 
+            {
+              label: 'Data Assets',
+              value: mockStewards.reduce((sum, s) => sum + s.assets.length, 0),
               icon: TrendingUp,
-              gradient: 'from-cyan-500 to-cyan-600',
-              accent: 'cyan'
+              accentColor: 'text-blue-300'
             },
-            { 
-              label: 'Active Issues', 
-              value: mockStewards.reduce((sum, s) => sum + s.assets.reduce((aSum, a) => aSum + a.anomalyCount, 0), 0), 
+            {
+              label: 'Active Issues',
+              value: mockStewards.reduce((sum, s) => sum + s.assets.reduce((aSum, a) => aSum + a.anomalyCount, 0), 0),
               icon: Zap,
-              gradient: 'from-red-500 to-red-600',
-              accent: 'red'
+              accentColor: 'text-amber-300'
             },
-            { 
-              label: 'Org. Health', 
-              value: `${Math.round(mockStewards.reduce((sum, s) => sum + s.overallHealth, 0) / mockStewards.length)}%`, 
-              icon: null,
-              gradient: 'from-purple-500 to-purple-600',
-              accent: 'purple'
+            {
+              label: 'Org. Health',
+              value: `${Math.round(mockStewards.reduce((sum, s) => sum + s.overallHealth, 0) / mockStewards.length)}%`,
+              icon: Shield,
+              accentColor: 'text-emerald-300'
             },
           ].map((stat, i) => {
             const Icon = stat.icon;
@@ -180,16 +172,16 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 + i * 0.05 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className={`group relative bg-gradient-to-br ${stat.gradient} bg-opacity-10 backdrop-blur-xl rounded-2xl p-8 border border-slate-700/40 shadow-xl hover:shadow-2xl transition-all overflow-hidden`}
+                whileHover={{ y: -8 }}
+                className="group relative bg-slate-800/40 backdrop-blur-xl rounded-2xl p-8 border border-slate-700/60 shadow-lg hover:shadow-xl transition-all overflow-hidden"
               >
-                <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-5 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-700/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="relative z-10">
                   <div className="flex items-center gap-4 mb-4">
-                    {Icon && <Icon className={`w-6 h-6 text-${stat.accent}-400`} />}
+                    {Icon && <Icon className={`w-6 h-6 ${stat.accentColor}`} />}
                   </div>
                   <p className="text-sm text-slate-400 mb-3 font-medium">{stat.label}</p>
-                  <p className={`text-5xl font-black bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}>
+                  <p className="text-5xl font-black text-slate-100">
                     {stat.value}
                   </p>
                 </div>
@@ -212,9 +204,8 @@ export default function Home() {
               setSelectedSteward(mockStewards[0]);
               setCurrentView('garden');
             }}
-            className="flex-1 px-8 py-5 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 hover:from-cyan-400 hover:via-blue-400 hover:to-purple-400 text-white font-bold rounded-xl transition-all shadow-2xl hover:shadow-cyan-500/50 text-lg group relative overflow-hidden"
+            className="flex-1 px-8 py-5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-xl text-lg group relative overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-purple-600 opacity-0 group-hover:opacity-20 transition-opacity" />
             <span className="relative z-10 flex items-center justify-center gap-2">
               🌱 Explore Your Data Garden
             </span>
@@ -224,9 +215,8 @@ export default function Home() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setCurrentView('rankings')}
-            className="flex-1 px-8 py-5 bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 hover:from-purple-500 hover:via-pink-500 hover:to-red-500 text-white font-bold rounded-xl transition-all shadow-2xl hover:shadow-purple-500/50 text-lg group relative overflow-hidden"
+            className="flex-1 px-8 py-5 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-xl text-lg group relative overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-700 to-red-700 opacity-0 group-hover:opacity-20 transition-opacity" />
             <span className="relative z-10 flex items-center justify-center gap-2">
               🏆 View Stewardship Rankings
             </span>
@@ -240,35 +230,35 @@ export default function Home() {
           transition={{ delay: 0.4 }}
         >
           <div className="mb-8">
-            <h3 className="text-4xl font-black bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent mb-2">Your Stewards</h3>
+            <h3 className="text-4xl font-black text-slate-100 mb-2">Your Stewards</h3>
             <p className="text-slate-400 text-lg">Track performance across teams and departments</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-20">
             {mockStewards.map((steward, idx) => {
               const healthScore = steward.overallHealth;
-              let gradientClass, healthColor, badge;
-              
+              let badge, barColor, statusText;
+
               if (healthScore >= 85) {
-                gradientClass = 'from-emerald-500 to-cyan-500';
-                healthColor = 'emerald';
                 badge = '🌻';
+                barColor = 'bg-emerald-500';
+                statusText = 'Excellent';
               } else if (healthScore >= 70) {
-                gradientClass = 'from-cyan-500 to-blue-500';
-                healthColor = 'cyan';
                 badge = '🌺';
+                barColor = 'bg-blue-500';
+                statusText = 'Good';
               } else if (healthScore >= 55) {
-                gradientClass = 'from-yellow-500 to-yellow-600';
-                healthColor = 'yellow';
                 badge = '🌾';
+                barColor = 'bg-amber-500';
+                statusText = 'Fair';
               } else if (healthScore >= 40) {
-                gradientClass = 'from-orange-500 to-red-500';
-                healthColor = 'orange';
                 badge = '🌱';
+                barColor = 'bg-orange-500';
+                statusText = 'At Risk';
               } else {
-                gradientClass = 'from-red-500 to-red-600';
-                healthColor = 'red';
                 badge = '💀';
+                barColor = 'bg-red-500';
+                statusText = 'Critical';
               }
 
               const issueCount = steward.assets.reduce((sum, a) => sum + a.anomalyCount, 0);
@@ -279,15 +269,15 @@ export default function Home() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 + idx * 0.05 }}
-                  whileHover={{ y: -12, scale: 1.02 }}
+                  whileHover={{ y: -8 }}
                   onClick={() => {
                     setSelectedSteward(steward);
                     setCurrentView('garden');
                   }}
-                  className={`text-left group relative bg-gradient-to-br ${gradientClass} bg-opacity-[0.08] backdrop-blur-xl rounded-2xl p-8 border border-slate-700/40 hover:border-slate-600/60 transition-all shadow-xl hover:shadow-2xl overflow-hidden`}
+                  className="text-left group relative bg-slate-800/50 backdrop-blur-xl rounded-2xl p-8 border border-slate-700/60 hover:border-slate-600 transition-all shadow-lg hover:shadow-xl overflow-hidden"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-10 transition-opacity" />
-                  
+                  <div className="absolute inset-0 bg-gradient-to-br from-slate-700/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
                   <div className="relative z-10">
                     {/* Header with badge */}
                     <div className="flex items-start justify-between mb-6">
@@ -298,39 +288,33 @@ export default function Home() {
                       <div className="text-4xl">{badge}</div>
                     </div>
 
-                    {/* Stats Row 1 */}
-                    <div className="grid grid-cols-3 gap-3 mb-4 pb-4 border-b border-slate-600/30">
+                    {/* Stats Row */}
+                    <div className="grid grid-cols-3 gap-3 mb-4 pb-4 border-b border-slate-700/40">
                       <div>
                         <p className="text-xs text-slate-500 mb-1">Assets</p>
                         <p className="text-lg font-bold text-slate-200">{steward.assets.length}</p>
                       </div>
                       <div>
                         <p className="text-xs text-slate-500 mb-1">Issues</p>
-                        <p className={`text-lg font-bold ${issueCount > 0 ? 'text-red-400' : 'text-green-400'}`}>
-                          {issueCount}
-                        </p>
+                        <p className="text-lg font-bold text-slate-200">{issueCount}</p>
                       </div>
                       <div>
                         <p className="text-xs text-slate-500 mb-1">Health</p>
-                        <p className={`text-lg font-bold bg-gradient-to-r ${gradientClass} bg-clip-text text-transparent`}>
-                          {healthScore}%
-                        </p>
+                        <p className="text-lg font-bold text-slate-200">{healthScore}%</p>
                       </div>
                     </div>
 
                     {/* Health Bar */}
                     <div>
-                      <div className="w-full h-3 bg-slate-700/50 rounded-full overflow-hidden mb-3">
+                      <div className="w-full h-2 bg-slate-700/70 rounded-full overflow-hidden mb-2">
                         <motion.div
-                          className={`h-full bg-gradient-to-r ${gradientClass}`}
+                          className={barColor}
                           initial={{ width: 0 }}
                           animate={{ width: `${healthScore}%` }}
                           transition={{ duration: 1, delay: 0.4 + idx * 0.05 }}
                         />
                       </div>
-                      <p className="text-xs text-slate-400 text-center">
-                        {healthScore >= 85 ? 'Excellent' : healthScore >= 70 ? 'Good' : healthScore >= 55 ? 'Fair' : healthScore >= 40 ? 'At Risk' : 'Critical'}
-                      </p>
+                      <p className="text-xs text-slate-400 text-center">{statusText}</p>
                     </div>
                   </div>
                 </motion.button>
